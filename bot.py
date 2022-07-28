@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 import logging
-from telegram import Update,  ReplyKeyboardMarkup, ReplyKeyboardRemove
+from telegram import Update,  ReplyKeyboardMarkup, ReplyKeyboardRemove, bot_api_version
 from telegram.ext import Updater, CallbackContext, CommandHandler, MessageHandler, Filters, ConversationHandler
 import pandas as pd
 
@@ -25,3 +25,34 @@ transactions['Cantidad'] = transactions['Cantidad'].replace('[^-.0-9]', '', rege
 
 ##### For logging how the bot it's doing
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+
+#############################################
+# Bot
+#############################################
+
+##### Handler functions
+
+### command: /hello
+def hello(update: Update, context: CallbackContext):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Hi, I'm your financial bot, I'll help you keep track of your expenses!")
+
+
+##### Bot configuration
+
+### updater
+upd = Updater(token=token, use_context=True)
+
+### dispatcher
+disp = upd.dispatcher
+
+### add handlers to the dispatcher
+disp.add_handler(CommandHandler('hello', hello))
+
+### start polling
+upd.start_polling()
+
+print('Bot running')
+
+upd.idle()
+
+print('End')
