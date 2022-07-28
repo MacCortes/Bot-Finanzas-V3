@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from auxiliar import *
 import logging
 from telegram import Update,  ReplyKeyboardMarkup, ReplyKeyboardRemove, bot_api_version
 from telegram.ext import Updater, CallbackContext, CommandHandler, MessageHandler, Filters, ConversationHandler
